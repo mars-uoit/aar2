@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "aar2_description")
+set(aar2_description_MAINTAINER "joe <joe@todo.todo>")
+set(aar2_description_DEPRECATED "")
+set(aar2_description_VERSION "0.0.0")
+set(aar2_description_BUILD_DEPENDS "urdf")
+set(aar2_description_RUN_DEPENDS "urdf")
+set(aar2_description_BUILDTOOL_DEPENDS "catkin")

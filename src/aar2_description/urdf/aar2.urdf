@@ -1,0 +1,128 @@
+<robot name="aar2">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size= "0.45 1.2 0.17"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="Yellow">
+        <color rgba="0.7 0.7 0.5 0.75"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="front_rightw">
+    <visual>
+      <geometry>
+        <cylinder length="0.13" radius="0.17"/>
+      </geometry>
+      <origin xyz="0.41 0.66 -0.35"/>
+      <material name="Black">
+        <color rgba="0 0 0 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="front_leftw">
+   <visual>
+      <geometry>
+        <cylinder length="0.13" radius="0.17"/>
+      </geometry>
+      <origin xyz="-0.41 0.66 -0.35"/>
+      <material name="Black">
+        <color rgba="0 0 0 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="mid_rightw">
+   <visual>
+      <geometry>
+        <cylinder length="0.13" radius="0.17"/>
+      </geometry>
+      <origin xyz="0.41 0 -0.35"/>
+      <material name="Black">
+        <color rgba="0 0 0 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="mid_leftw">
+   <visual>
+      <geometry>
+        <cylinder length="0.13" radius="0.17"/>
+      </geometry>
+      <origin xyz="-0.41 0 -0.35"/>
+      <material name="Black">
+        <color rgba="0 0 0 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="rear_rightw">
+  <visual>
+      <geometry>
+        <cylinder length="0.13" radius="0.17"/>
+      </geometry>
+      <origin xyz="0.41 -0.45 -0.35"/>
+      <material name="Black">
+        <color rgba="0 0 0 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="rear_leftw">
+   <visual>
+      <geometry>
+        <cylinder length="0.13" radius="0.17"/>
+      </geometry>
+      <origin xyz="-0.41 -0.45 -0.35"/>
+      <material name="Black">
+        <color rgba="0 0 0 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_front_right" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_rightw"/>
+    <origin xyz="0.41 0.66 -0.35" rpy="0 1.57 0" />
+    <axis xyz="0 0 -1" />
+  </joint>
+
+  <joint name="base_front_left" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_leftw"/>
+    <origin xyz="-0.41 0.66 -0.35" rpy="0 -1.57 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <joint name="base_mid_right" type="continuous">
+    <parent link="base_link"/>
+    <child link="mid_rightw"/>
+    <origin xyz="0.41 0 -0.35" rpy="0 1.57 0" />
+    <axis xyz="0 0 -1" />
+  </joint>
+
+   <joint name="base_mid_left" type="continuous">
+    <parent link="base_link"/>
+    <child link="mid_leftw"/>
+    <origin xyz="-0.41 0 -0.35" rpy="0 -1.57 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <joint name="base_rear_right" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_rightw"/>
+    <origin xyz="0.41 -0.45 -0.35" rpy="0 1.57 0" />
+    <axis xyz="0 0 -1" />
+  </joint>
+
+  <joint name="base_rear_left" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_leftw"/>
+    <origin xyz="-0.41 -0.45 -0.35" rpy="0 -1.57 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+</robot>
