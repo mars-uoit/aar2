@@ -1,0 +1,9 @@
+digraph G {
+"odom" -> "base_link"[label="Broadcaster: /aar_imu/imu_filter_madgwick\nAverage rate: 112.234 Hz\nMost recent transform: 1420141790.859 \nBuffer length: 4.936 sec\n"];
+"base_link" -> "front_leftw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.205 Hz\nMost recent transform: 1420141791.356 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "front_rightw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.205 Hz\nMost recent transform: 1420141791.356 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "mid_leftw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.205 Hz\nMost recent transform: 1420141791.356 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "mid_rightw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.205 Hz\nMost recent transform: 1420141791.356 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "rear_leftw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.205 Hz\nMost recent transform: 1420141791.356 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "rear_rightw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.205 Hz\nMost recent transform: 1420141791.356 \nBuffer length: 4.920 sec\n"];
+}

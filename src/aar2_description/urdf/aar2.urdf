@@ -83,46 +83,46 @@
     </visual>
   </link>
 
-  <joint name="base_front_right" type="continuous">
+  <joint name="base_front_right" type="fixed">
     <parent link="base_link"/>
     <child link="front_rightw"/>
     <origin xyz="0.66 -0.41 -0.35" rpy="1.57 0 0" />
-    <axis xyz="0 0 -1" />
+    <!--axis xyz="0 0 -1" /-->
   </joint>
 
-  <joint name="base_front_left" type="continuous">
+  <joint name="base_front_left" type="fixed">
     <parent link="base_link"/>
     <child link="front_leftw"/>
     <origin xyz="0.66 0.41 -0.35" rpy="-1.57 0 0" />
-    <axis xyz="0 0 1" />
+    <!--axis xyz="0 0 1" /-->
   </joint>
 
-  <joint name="base_mid_right" type="continuous">
+  <joint name="base_mid_right" type="fixed">
     <parent link="base_link"/>
     <child link="mid_rightw"/>
     <origin xyz="0 -0.41 -0.35" rpy="1.57 0 0" />
-    <axis xyz="0 0 -1" />
+    <!--axis xyz="0 0 -1" /-->
   </joint>
 
-   <joint name="base_mid_left" type="continuous">
+   <joint name="base_mid_left" type="fixed">
     <parent link="base_link"/>
     <child link="mid_leftw"/>
     <origin xyz="0 0.41 -0.35" rpy="-1.57 0 0" />
-    <axis xyz="0 0 1" />
+    <!--axis xyz="0 0 1" /-->
   </joint>
 
-  <joint name="base_rear_right" type="continuous">
+  <joint name="base_rear_right" type="fixed">
     <parent link="base_link"/>
     <child link="rear_rightw"/>
     <origin xyz="-0.45 -0.41 -0.35" rpy="1.57 0 0" />
-    <axis xyz="0 0 -1" />
+    <!--axis xyz="0 0 -1" /-->
   </joint>
 
-  <joint name="base_rear_left" type="continuous">
+  <joint name="base_rear_left" type="fixed">
     <parent link="base_link"/>
     <child link="rear_leftw"/>
     <origin xyz="-0.45 0.41 -0.35" rpy="-1.57 0 0" />
-    <axis xyz="0 0 1" />
+    <!--axis xyz="0 0 1" /-->
   </joint>
 
 </robot>

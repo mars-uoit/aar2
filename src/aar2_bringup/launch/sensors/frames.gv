@@ -1,0 +1,9 @@
+digraph G {
+"base_link" -> "front_leftw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.200 Hz\nMost recent transform: 1420143436.323 \nBuffer length: 4.920 sec\n"];
+"odom" -> "base_link"[label="Broadcaster: /ekf_localization_odom\nAverage rate: 30.204 Hz\nMost recent transform: 1420143435.823 \nBuffer length: 4.900 sec\n"];
+"base_link" -> "front_rightw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.200 Hz\nMost recent transform: 1420143436.323 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "mid_leftw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.200 Hz\nMost recent transform: 1420143436.323 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "mid_rightw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.200 Hz\nMost recent transform: 1420143436.323 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "rear_leftw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.200 Hz\nMost recent transform: 1420143436.323 \nBuffer length: 4.920 sec\n"];
+"base_link" -> "rear_rightw"[label="Broadcaster: /AAR2_DESCRIPTION\nAverage rate: 50.200 Hz\nMost recent transform: 1420143436.323 \nBuffer length: 4.920 sec\n"];
+}
