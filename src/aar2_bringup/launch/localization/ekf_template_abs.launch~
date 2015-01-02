@@ -7,7 +7,7 @@
          roll, pitch, yaw, and the respective velocites for those quantities. Accelerations are not used (yet).
          Units for all measurements are assumed to be in meters and radians. By default, the node outputs an
          Odometry message with the topic name odometry/filtered. Use the remap tag to change this. -->
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_odom" clear_params="true">
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_abs" clear_params="true">
 
       <!-- The frequency, in Hz, at which the filter will output a position estimate. Note that
            the filter will not begin computation until it receives at least one message from
@@ -43,20 +43,19 @@
                   3a. Set your "world_frame" to your map_frame value
                   3b. MAKE SURE something else is generating the odom->base_link transform. Note that this can even be
                       another instance of robot_localization! However, that instance should *not* fuse the global data. -->
-      <!--param name="map_frame" value="map"/-->
+      <param name="map_frame" value="map"/>
       <param name="odom_frame" value="odom"/>
       <param name="base_link_frame" value="base_link"/>
-      <param name="world_frame" value="odom"/>
+      <param name="world_frame" value="map"/>
 
       <!-- The filter accepts an arbitrary number of inputs from each input message type (Odometry, PoseStamped,
            TwistStamped, Imu). To add a new one, simply append the next number in the sequence to its base name,
            e.g., odom0, odom1, twist0, twist1, imu0, imu1, imu2, etc. The value should be the topic name. -->
-      <!--param name="odom0" value="wheel_encoder/odometry"/-->
-      <param name="imu0" value="/aar_imu/imu/data"/> 
-      <!--param name="pose0" value="gps/fix"/-->
-      <!--param name="odom1" value="example/another_odom"/>
-      <param name="twist0" value="example/twist"/-->
-
+      <param name="odom0" value="aar2/odometry/odom"/>
+      <param name="odom1" value="aar2/odometry/gps"/>
+      <!--param name="pose0" value="example/pose"/>
+      <param name="twist0" value="example/twist"/>
+      <param name="imu0" value="example/imu/data"/--> 
 
       <!-- Each sensor reading updates some or all of the filter's state. These options give you greater control over
            which values from each measurement are fed to the filter. For example, if you have an odometry message as input,
@@ -64,30 +63,30 @@
            The order of the values is x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw. Note that not some message
            types lack certain variables. For example, a TwistWithCovarianceStamped message has no pose information, so the first
            six values would be meaningless in that case. -->
-      <!--rosparam param="odom0_config">[false, false, false, 
+      <rosparam param="odom0_config">[false, false, false, 
+                                      true, true, true, 
+                                      true,  true, true, 
+                                      true, true, true]</rosparam>
+
+      <rosparam param="odom1_config">[true, true, false, 
                                       false, false, false, 
-                                      false, true, false, 
-                                      false, false, true]</rosparam-->
+                                      true,  false, false, 
+                                      false, false, false]</rosparam>
 
       <!--rosparam param="pose0_config">[true,  true,  false, 
                                       false, false, false, 
                                       false, false, false, 
-                                      false, false, false]</rosparam-->
+                                      false, false, false]</rosparam>
 
-      <rosparam param="imu0_config">[true, true, true, 
-                                     true,  true,  true, 
-                                     true, true, true, 
-                                     true,  true,  true]</rosparam>
-
-      <!--rosparam param="odom1_config">[false, false, false, 
-                                      false, false, false, 
-                                      true,  false, false, 
-                                      false, false, false]</rosparam-->
-
-      <!--rosparam param="twist0_config">[false, false, false, 
+      <rosparam param="twist0_config">[false, false, false, 
                                        false, false, false, 
                                        true,  true,  true, 
-                                       true,  true,  true]</rosparam-->
+                                       true,  true,  true]</rosparam>
+
+      <rosparam param="imu0_config">[false, false, false, 
+                                     true,  true,  true, 
+                                     false, false, false, 
+                                     true,  true,  true]</rosparam-->
 
       <!-- The best practice for including new sensors in robot_localization's state estimation nodes is to pass in velocity 
            measurements and let the nodoes integrate them. However, this isn't always feasible, and so the state estimation
@@ -97,10 +96,10 @@
            to true. This will carry out differential integration of the sensor data, i.e., it will repeatedly integrate the 
            difference between a given measurement and the previous measurement from that sensor. 
            NOTE: this only applies to sensors that provide absolute measurements, so Twist messages are not supported. -->
-      <!--param name="odom0_differential" value="false"/-->
-      <!--param name="odom1_differential" value="false"/-->
-      <!--param name="pose0_differential" value="true"/-->
-      <param name="imu0_differential" value="true"/>
+      <param name="odom0_differential" value="true"/>
+      <param name="odom1_differential" value="false"/>
+      <!--param name="pose0_differential" value="true"/>
+      <param name="imu0_differential" value="false"/-->
 
       <!-- If we're including accelerations in our state estimate, then we'll probably want to remove any acceleration that
            is due to gravity. If you don't want to, then set this to false. -->
@@ -127,7 +126,7 @@
                                                   0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.0, 0.0, 0.002, 0.0, 0.0,
                                                   0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.0, 0.0, 0.0, 0.002, 0.0,
                                                   0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.004]</rosparam>
-
+	<remap from ="/odometry/filtered" to="/aar2/odometry" />
     </node>
 	 
 </launch>
