@@ -17,4 +17,4 @@ export PKG_CONFIG_PATH="/home/joe/aar2/devel/lib/pkgconfig:/home/joe/aar2/devel/
 export PWD="/home/joe/aar2/build"
 export PYTHONPATH="/home/joe/aar2/devel/lib/python2.7/dist-packages:$PYTHONPATH"
 export ROSLISP_PACKAGE_DIRECTORIES="/home/joe/aar2/devel/share/common-lisp"
-export ROS_PACKAGE_PATH="/home/joe/aar2/src:$ROS_PACKAGE_PATH"
+export ROS_PACKAGE_PATH="/home/joe/aar2/src:/home/joe/husky_robot_ws/install/share:/home/joe/husky_robot_ws/install/stacks:/home/joe/catkin_ws/install/share:/home/joe/catkin_ws/install/stacks:/opt/ros/indigo/share:/opt/ros/indigo/stacks"

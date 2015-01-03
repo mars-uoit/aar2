@@ -1,0 +1,8 @@
+prefix=/home/joe/aar2/install
+
+Name: aar2_bringup
+Description: Description of aar2_bringup
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/joe/aar2/install/lib 
+Requires: 

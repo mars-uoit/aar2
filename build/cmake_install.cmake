@@ -125,6 +125,8 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/joe/aar2/build/gtest/cmake_install.cmake")
+  INCLUDE("/home/joe/aar2/build/aar2_bringup/cmake_install.cmake")
+  INCLUDE("/home/joe/aar2/build/aar2_base/cmake_install.cmake")
   INCLUDE("/home/joe/aar2/build/aar2_description/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
