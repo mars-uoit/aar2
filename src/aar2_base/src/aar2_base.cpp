@@ -134,7 +134,7 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     // Convert to rads for each wheel from delta encoder ticks
     double left_v = encoder1-prevEnc1;
     prevEnc1=encoder1;
-    if (abs(left_v)>100000) {ROS_INFO("Left Encoder Wrap Around"); return;}
+    if (abs(left_v)>100000) {ROS_INFO("Left Encoder Wrap Around"); return;} // Position is reported in rads, and wraps around +-6M 
     left_v /= delta_time;
 
     double right_v = -encoder2 +prevEnc2;
@@ -158,11 +158,9 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
 
     
     // Update the states based on model and input
-    prev_x += delta_time * v
-                          * cos(prev_w + delta_time * (w/2.0));
+    prev_x += delta_time * v * cos(prev_w + delta_time * (w/2.0)); // Why w/2.0?
     
-    prev_y += delta_time * v
-                          * sin(prev_w + delta_time * (w/2.0));
+    prev_y += delta_time * v * sin(prev_w + delta_time * (w/2.0));
     prev_w += delta_time * w;
     prev_w = wrapToPi(prev_w);
     
@@ -207,7 +205,7 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
 
 int main(int argc, char **argv) {
     // Node setup
-    ros::init(argc, argv, "aar_mobile_base");
+    ros::init(argc, argv, "aar2_base");
     ros::NodeHandle n;
     prev_time = ros::Time::now();
     
