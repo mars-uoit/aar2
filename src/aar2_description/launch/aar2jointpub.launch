@@ -1,0 +1,6 @@
+<launch>
+	<param name="robot_description" textfile="$(find aar2_description)/urdf/aar2.urdf"/>
+	<rosparam file="$(find aar2_description/config/joint.yaml" command="load" />
+	<node pkg="joint_state_publisher" type="joint_state_publisher" name="AAR2_DESCRIPTION_JOINT" >
+	</node>
+</launch>
