@@ -1,7 +1,7 @@
 image: test.png 
 #path to the image file
-resolution: 0.1 
-#meters /pixel
+resolution: 0.44
+#meters /pixel for 20m scale, 0.89 for 50m scale googlemaps 1600x900 res
 origin: [-39.05, -25.95, 0.0]
 #2-D pose of lower left pixel of the map
 occupied_thresh: 0.65 

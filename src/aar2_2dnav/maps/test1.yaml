@@ -1,6 +1,6 @@
 image: test1.png 
 #path to the image file
-resolution: 0.1 
+resolution: 0.44
 #meters /pixel
 origin: [-39.05, -28.5, 0.0]
 #2-D pose of lower left pixel of the map
