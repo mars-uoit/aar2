@@ -23,7 +23,7 @@
       <!-- If this is set to true, no 3D information will be used in your state estimate. Use this if you
            are operating in a planar environment and want to ignore the effect of small variations in the
            ground plane that might otherwise be detected by, for example, an IMU. -->
-      <param name="two_d_mode" value="false"/>
+      <param name="two_d_mode" value="true"/>
 
       <!-- REP-105 (http://www.ros.org/reps/rep-0105.html) specifies three principal coordinate frames: map, 
            odom, and base_link. base_link is the coordinate frame that is affixed to the robot. The robot's 
