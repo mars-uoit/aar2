@@ -1,5 +1,6 @@
 <launch>
-	<param name="robot_description" textfile="$(find aar2_description)/urdf/aar2.urdf"/>
+	<param name="robot_description" textfile="$(find aar2_description)/urdf/aar2test.urdf"/>
 	<node pkg="robot_state_publisher" type="robot_state_publisher" name="AAR2_DESCRIPTION" >
 	</node>
+	<node pkg="tf" type="static_transform_publisher" name="map_base_link" args="0 0 0.52 0 0 0 /map /base_link 100"/>
 </launch>
