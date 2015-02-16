@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- If enabled, generate the LASER payload (by default, a SICK LMS111). -->
+  <xacro:include filename="accessories/sick_lms1xx.urdf.xacro" />
+  <xacro:if value="$(optenv AAR2_LASER 0)">
+    <sick_lms1xx_mount prefix="$(optenv AAR2_LASER_MOUNT front)"
+                       topic="$(optenv AAR2_LASER_TOPIC scan)" />
+
+    <joint name="$front_laser_mount_joint" type="fixed">
+      <origin xyz="$(optenv AAR2_LASER_OFFSET 0 0 0)"
+              rpy="$(optenv AAR2_LASER_RPY 0 0 0)" />
+      <parent link="$(optenv AAR2_LASER_MOUNT front)_mount" />
+      <child link="$(optenv AAR2_LASER_MOUNT front)_laser_mount" />
+    </joint>
+  </xacro:if>
+
+</robot>
