@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "aar2_bringup")
-set(aar2_bringup_MAINTAINER "joe <joe@todo.todo>")
-set(aar2_bringup_DEPRECATED "")
-set(aar2_bringup_VERSION "0.0.0")
-set(aar2_bringup_BUILD_DEPENDS )
-set(aar2_bringup_RUN_DEPENDS )
-set(aar2_bringup_BUILDTOOL_DEPENDS "catkin")

@@ -1,8 +1,0 @@
-prefix=/home/joe/aar2/devel
-
-Name: aar2_bringup
-Description: Description of aar2_bringup
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/joe/aar2/devel/lib 
-Requires: 

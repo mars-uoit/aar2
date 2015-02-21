@@ -1,2 +1,0 @@
-aar2_2dnav:aar2_base:aar2_bringup:aar2_description:aar2_teleop:aar2_viz
--DCATKIN_DEVEL_PREFIX=/home/joe/aar2/devel -DCMAKE_INSTALL_PREFIX=/home/joe/aar2/install -G Unix Makefiles
