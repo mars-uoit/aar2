@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/joe/aar2/devel/lib;/home/joe/husky_robot_ws/install/lib;/home/joe/catkin_ws/install/lib;/opt/ros/indigo/lib)
+    foreach(path /home/joe/aar2/devel/lib;/home/joe/jackal_robot/install/lib;/home/joe/jackal_simulator/install/lib;/home/joe/aar2/devel/lib;/home/joe/husky_robot_ws/install/lib;/home/joe/catkin_ws/install/lib;/opt/ros/indigo/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

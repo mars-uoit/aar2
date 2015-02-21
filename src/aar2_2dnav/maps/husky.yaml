@@ -1,10 +1,11 @@
-image: 43°56'44.0"N 78°53'54.4"W.png
+image: 43°56'44.0"N 78°53'54.4"W(withmarker).pgm
 #path to the image file
-resolution: 0.22
+resolution: 0.11
 #meters /pixel for 20m scale (see image), 0.44 for 20m (short) 0.89 for 50m scale googlemaps 1600x900 res
-origin: [-183.095, -86.68, 0.0]
+#origin: [-183.095, -86.68, 0.0]
+origin: [-110.0, -50.5, 0.0]
 #2-D pose of lower left pixel of the map (-832.250, -394.00)pix --> (-183.095, -86.68)m
-occupied_thresh: 0.65 
+occupied_thresh: 0.90 
 #greater = occupied
 free_thresh: 0.1
 #less = nonoccupied

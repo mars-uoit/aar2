@@ -10,6 +10,14 @@
 /home/joe/aar2/install/share/aar2_bringup/cmake/aar2_bringupConfig.cmake
 /home/joe/aar2/install/share/aar2_bringup/cmake/aar2_bringupConfig-version.cmake
 /home/joe/aar2/install/share/aar2_bringup/package.xml
+/home/joe/aar2/install/lib/pkgconfig/aar2_teleop.pc
+/home/joe/aar2/install/share/aar2_teleop/cmake/aar2_teleopConfig.cmake
+/home/joe/aar2/install/share/aar2_teleop/cmake/aar2_teleopConfig-version.cmake
+/home/joe/aar2/install/share/aar2_teleop/package.xml
+/home/joe/aar2/install/share/aar2_teleop/config/teleop.yaml~
+/home/joe/aar2/install/share/aar2_teleop/config/teleop.yaml
+/home/joe/aar2/install/share/aar2_teleop/launch/teleop.launch
+/home/joe/aar2/install/share/aar2_teleop/launch/teleop.launch~
 /home/joe/aar2/install/lib/pkgconfig/aar2_base.pc
 /home/joe/aar2/install/share/aar2_base/cmake/aar2_baseConfig.cmake
 /home/joe/aar2/install/share/aar2_base/cmake/aar2_baseConfig-version.cmake
@@ -18,3 +26,11 @@
 /home/joe/aar2/install/share/aar2_description/cmake/aar2_descriptionConfig.cmake
 /home/joe/aar2/install/share/aar2_description/cmake/aar2_descriptionConfig-version.cmake
 /home/joe/aar2/install/share/aar2_description/package.xml
+/home/joe/aar2/install/lib/pkgconfig/aar2_viz.pc
+/home/joe/aar2/install/share/aar2_viz/cmake/aar2_vizConfig.cmake
+/home/joe/aar2/install/share/aar2_viz/cmake/aar2_vizConfig-version.cmake
+/home/joe/aar2/install/share/aar2_viz/package.xml
+/home/joe/aar2/install/lib/pkgconfig/aar2_2dnav.pc
+/home/joe/aar2/install/share/aar2_2dnav/cmake/aar2_2dnavConfig.cmake
+/home/joe/aar2/install/share/aar2_2dnav/cmake/aar2_2dnavConfig-version.cmake
+/home/joe/aar2/install/share/aar2_2dnav/package.xml

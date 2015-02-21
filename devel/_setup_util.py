@@ -259,7 +259,7 @@ if __name__ == '__main__':
             sys.exit(1)
 
         # environment at generation time
-        CMAKE_PREFIX_PATH = '/home/joe/husky_robot_ws/install;/home/joe/catkin_ws/install;/opt/ros/indigo'.split(';')
+        CMAKE_PREFIX_PATH = '/home/joe/jackal_robot/install;/home/joe/jackal_simulator/install;/home/joe/aar2/devel;/home/joe/husky_robot_ws/install;/home/joe/catkin_ws/install;/opt/ros/indigo'.split(';')
         # prepend current workspace if not already part of CPP
         base_path = os.path.dirname(__file__)
         if base_path not in CMAKE_PREFIX_PATH:
