@@ -2,7 +2,7 @@
 	<!-- IMU -->
 	<group ns="aar_imu">
 		<node pkg="rosserial_python" type="serial_node.py" name="ros_arduino_imu" output="screen" respawn="true">
-		<param name="~port" value="/dev/ttyACM0" />
+		<param name="~port" value="/dev/ttyACM1" />
 		<param name="~baud" value="115200" />
 		<remap from="/raw_imu" to="/aar_imu/raw_imu"/>
 		</node>

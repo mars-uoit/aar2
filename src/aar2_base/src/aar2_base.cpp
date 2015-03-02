@@ -29,12 +29,12 @@ std::string odom_frame_id;
 size_t error_count;
 double target_speed = 0.0;
 double target_direction = 0.0;
-
+double twist_factor = 10.0;
 double rot_cov = 0.0;
 double pos_cov = 0.0;
 
-static double L_MAX = 200.0;
-static double R_MAX = 200.0;
+static double L_MAX = 1000.0 * 3.74;
+static double R_MAX = 1000.0 * 3.74;
 
 // Persistent variables
 double prev_x = 0, prev_y = 0, prev_w = 0;
@@ -62,8 +62,8 @@ void cmd_velCallback(const geometry_msgs::Twist::ConstPtr& msg) {
     double B_rads = B*2 / wheel_diameter;
     
     // Convert rpm to relative
-    double Left = A_rads-B_rads;
-    double Right = A_rads+B_rads;
+    double Left = (A_rads-B_rads) * 1000.0/23.0 * 3.74;
+    double Right = (A_rads+B_rads) * 1000.0/23.0 * 3.74;
     
     // ROS_INFO("Arpm: %f, Arel: %f, Brpm: %f, Brel: %f", A_rpm, A_rel, B_rpm, Right);
     

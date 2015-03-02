@@ -1,5 +1,5 @@
 <launch>
-  <arg name="joy_dev" default="/dev/input/js0" />
+  <arg name="joy_dev" default="/dev/input/js2" />
   <arg name="joystick" default="true" />
   
   <rosparam command="load" file="$(find aar2_teleop)/config/teleop.yaml" />
