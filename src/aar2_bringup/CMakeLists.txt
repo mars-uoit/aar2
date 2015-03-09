@@ -4,7 +4,11 @@ project(aar2_bringup)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+  laser_geometry
+  tf
+  sensor_msgs
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -94,9 +98,14 @@ catkin_package(
 # add_library(aar2_bringup
 #   src/${PROJECT_NAME}/aar2_bringup.cpp
 # )
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
 
 ## Declare a cpp executable
 # add_executable(aar2_bringup_node src/aar2_bringup_node.cpp)
+add_executable(laserToCloud src/laserToCloud.cpp)
+target_link_libraries(laserToCloud ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

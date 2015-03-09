@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="tf" type="static_transform_publisher" name="base_to_cloud" args="0 0 0 0 0 0 /base_link /laser 200" />
+        <!--node pkg="tf" type="static_transform_publisher" name="laser_to_cloud" args="0 0 0 0 0 0 /laser /cloud 200" /-->
+</launch>

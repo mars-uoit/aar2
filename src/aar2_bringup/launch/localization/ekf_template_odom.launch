@@ -51,7 +51,7 @@
       <!-- The filter accepts an arbitrary number of inputs from each input message type (Odometry, PoseStamped,
            TwistStamped, Imu). To add a new one, simply append the next number in the sequence to its base name,
            e.g., odom0, odom1, twist0, twist1, imu0, imu1, imu2, etc. The value should be the topic name. -->
-      <param name="odom0" value="/encoder"/>
+      <param name="odom0" value="/AAR2_BASE/odom"/>
       <param name="imu0" value="/aar_imu/imu/data"/> 
       <!--param name="pose0" value="gps/fix"/-->
       <!--param name="odom1" value="example/another_odom"/>
