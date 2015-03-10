@@ -1,0 +1,7 @@
+<launch>
+  <node type="laser_scan_assembler" pkg="laser_assembler" name="assembler">
+    <remap from="scan" to="scan"/>
+    <param name="max_scans" type="int" value="200" />
+    <param name="fixed_frame" type="string" value="base_link" />
+  </node>
+</launch>

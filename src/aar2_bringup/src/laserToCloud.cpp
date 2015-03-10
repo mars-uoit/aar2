@@ -17,7 +17,7 @@ class My_Filter {
 
 My_Filter::My_Filter(){
         scan_sub_ = node_.subscribe<sensor_msgs::LaserScan> ("/scan", 100, &My_Filter::scanCallback, this);
-        point_cloud_publisher_ = node_.advertise<sensor_msgs::PointCloud> ("/cloud", 100, false);
+        point_cloud_publisher_ = node_.advertise<sensor_msgs::PointCloud> ("/cloud_in", 100, false);
 }
 
 void My_Filter::scanCallback(const sensor_msgs::LaserScan::ConstPtr& scan){
@@ -30,6 +30,7 @@ void My_Filter::scanCallback(const sensor_msgs::LaserScan::ConstPtr& scan){
   }
 
   sensor_msgs::PointCloud cloud;
+  cloud.header.frame_id = "cloud";
   projector_.transformLaserScanToPointCloud("/base_link",*scan,
           cloud,tfListener_);
   point_cloud_publisher_.publish(cloud);
