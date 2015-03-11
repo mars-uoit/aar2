@@ -1,0 +1,15 @@
+<launch>
+  <arg name="host" default="192.168.0.3" />
+  <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node" output="screen">
+    <param name="host" value="$(arg host)" />
+  </node>
+  <node pkg="aar2_bringup" name="laserTfBroadcaster" type="laserTfBroadcaster" output="screen"/>
+  <node pkg="aar2_bringup" name="laserToCloud" type="laserToCloud" output="screen"/>
+  <node pkg="aar2_bringup" name="periodic_snapshotter" type="periodic_snapshotter" output="screen"/>
+  <node type="point_cloud_assembler" pkg="laser_assembler" name="my_assembler">
+     <remap from="cloud" to="cloud_in"/>
+     <param name="max_clouds" type="int" value="400" />
+     <param name="fixed_frame" type="string" value="base_link" />
+  </node>
+</launch>
+
