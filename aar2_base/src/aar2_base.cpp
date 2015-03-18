@@ -6,6 +6,8 @@
 #include "roboteq_msgs/Command.h"
 #include "roboteq_msgs/Feedback.h"
 #include "tf/tf.h"
+#include <message_filters/sync_policies/approximate_time.h>
+
 //#include <tf/transform_broadcaster.h>
 
 #include <string>
@@ -13,7 +15,11 @@
 
 
 using std::string;
+using namespace roboteq_msgs;
+using namespace message_filters::sync_policies;
 
+typedef message_filters::sync_policies::ApproximateTime<roboteq_msgs::Feedback,
+					       roboteq_msgs::Feedback> SyncPolicy;
 
 ros::Publisher odom_pub;
 ros::Publisher velocityL;
@@ -21,9 +27,9 @@ ros::Publisher velocityR;
 //tf::TransformBroadcaster *odom_broadcaster;
 
 //static double ENCODER_RESOLUTION = 250*4; //dont need
-double wheel_circumference = 0.0;
-double wheel_base_length = 0.0;
-double wheel_diameter = 0.0;
+double wheel_circumference = 1.036828;
+double wheel_base_length = 1.0922;
+double wheel_diameter = 0.3302;
 double encoder_poll_rate;
 std::string odom_frame_id;
 size_t error_count;
@@ -120,7 +126,6 @@ void debugMsgCallback(const std::string &msg) {
 
 void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const roboteq_msgs::Feedback::ConstPtr& right_msg) {
 
-    
     long encoder1, encoder2;
     ros::Time now = ros::Time::now();
     try{encoder1=left_msg->measured_position;}    
@@ -137,7 +142,7 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     if (abs(left_v)>100000) {ROS_INFO("Left Encoder Wrap Around"); return;} // Position is reported in rads, and wraps around +-6M 
     left_v /= delta_time;
 
-    double right_v = -encoder2 +prevEnc2;
+    double right_v = encoder2 -prevEnc2;
     prevEnc2=encoder2;
     if (abs(right_v)>100000) {ROS_INFO("Right Encoder Wrap Around"); return;}
     right_v /= delta_time;
@@ -172,8 +177,8 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     nav_msgs::Odometry odom_msg;
     odom_msg.header.stamp = now;
     odom_msg.header.frame_id = odom_frame_id;
-    odom_msg.pose.pose.position.x = prev_x;
-    odom_msg.pose.pose.position.y = prev_y;
+    odom_msg.pose.pose.position.x = prev_x/2.0;
+    odom_msg.pose.pose.position.y = prev_y/2.0;
     odom_msg.pose.pose.orientation = quat;
     odom_msg.pose.covariance[0] = pos_cov;
     odom_msg.pose.covariance[7] = pos_cov;
@@ -186,9 +191,9 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     odom_msg.twist.twist.linear.x = v;
     // odom_msg.twist.twist.angular.z = w/delta_time;
     odom_msg.twist.twist.angular.z = w;
-    
+    //{ROS_WARN("Publish odom"); return;}
     odom_pub.publish(odom_msg);
-    
+    //{ROS_WARN("Odom published"); return;}
     // TODO: Add TF broadcaster
     // geometry_msgs::TransformStamped odom_trans;
     // odom_trans.header.stamp = now;
@@ -214,12 +219,12 @@ int main(int argc, char **argv) {
     //n.param("serial_port", port, std::string("/dev/motor_controller"));
     
     // Wheel diameter parameter
-    n.param("wheel_diameter", wheel_diameter, 0.3048);
+    n.param("wheel_diameter", wheel_diameter, 0.3302);
     
     wheel_circumference = wheel_diameter * M_PI;
     
     // Wheel base length
-    n.param("wheel_base_length", wheel_base_length, 0.9144);
+    n.param("wheel_base_length", wheel_base_length, 1.0922);
     
     // Odom Frame id parameter
     n.param("odom_frame_id", odom_frame_id, std::string("odom"));
@@ -244,9 +249,11 @@ int main(int argc, char **argv) {
     
     // cmd_vel Subscriber
     ros::Subscriber sub = n.subscribe("cmd_vel", 1, cmd_velCallback);
-    message_filters::Subscriber<roboteq_msgs::Feedback> left_sub(n, "left_feedback", 1);
-    message_filters::Subscriber<roboteq_msgs::Feedback> right_sub(n, "right_feedback", 1);
-    message_filters::TimeSynchronizer<roboteq_msgs::Feedback, roboteq_msgs::Feedback> sync(left_sub, right_sub, 10);
+
+    message_filters::Subscriber<roboteq_msgs::Feedback> left_sub(n, "Left/feedback", 1);
+    message_filters::Subscriber<roboteq_msgs::Feedback> right_sub(n, "Right/feedback", 1);
+    //message_filters::TimeSynchronizer<roboteq_msgs::Feedback, roboteq_msgs::Feedback> sync(left_sub, right_sub, 10);
+    message_filters::Synchronizer<SyncPolicy> sync (SyncPolicy(5), left_sub, right_sub);
     sync.registerCallback(boost::bind(&queryEncoders, _1, _2));
     
     // Spinner

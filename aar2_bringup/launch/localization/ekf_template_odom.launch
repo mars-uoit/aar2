@@ -23,7 +23,7 @@
       <!-- If this is set to true, no 3D information will be used in your state estimate. Use this if you
            are operating in a planar environment and want to ignore the effect of small variations in the
            ground plane that might otherwise be detected by, for example, an IMU. -->
-      <param name="two_d_mode" value="false"/>
+      <param name="two_d_mode" value="true"/>
 
       <!-- REP-105 (http://www.ros.org/reps/rep-0105.html) specifies three principal coordinate frames: map, 
            odom, and base_link. base_link is the coordinate frame that is affixed to the robot. The robot's 
@@ -65,8 +65,8 @@
            types lack certain variables. For example, a TwistWithCovarianceStamped message has no pose information, so the first
            six values would be meaningless in that case. -->
       <rosparam param="odom0_config">[true, true, false, 
-                                      false, false, false, 
-                                      true, true, false, 
+                                      false, false, true, 
+                                      true, true, true, 
                                       false, false, true]</rosparam>
 
       <!--rosparam param="pose0_config">[true,  true,  false, 
@@ -97,7 +97,7 @@
            to true. This will carry out differential integration of the sensor data, i.e., it will repeatedly integrate the 
            difference between a given measurement and the previous measurement from that sensor. 
            NOTE: this only applies to sensors that provide absolute measurements, so Twist messages are not supported. -->
-      <param name="odom0_differential" value="true"/>
+      <param name="odom0_differential" value="false"/>
       <!--param name="odom1_differential" value="false"/-->
       <!--param name="pose0_differential" value="true"/-->
       <param name="imu0_differential" value="false"/>
