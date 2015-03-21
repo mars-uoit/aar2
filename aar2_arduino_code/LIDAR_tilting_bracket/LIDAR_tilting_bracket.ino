@@ -56,7 +56,7 @@ void loop()
   t.child_frame_id = laser;
   t.transform.translation.x = 1.0; 
   t.transform.rotation.x = 0.0;
-  t.transform.rotation.y = a; 
+  t.transform.rotation.y = a;
   t.transform.rotation.z = 0.0; 
   t.transform.rotation.w = 1.0;  
   t.header.stamp = nh.now();
