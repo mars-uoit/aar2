@@ -64,12 +64,13 @@ void cmd_velCallback(const geometry_msgs::Twist::ConstPtr& msg) {
     double A = msg->linear.x;
     double B = msg->angular.z * (wheel_base_length/2.0);
     
-    double A_rads = A*2 / wheel_diameter;
-    double B_rads = B*2 / wheel_diameter;
+    // Factor for linear is tuned (1000.0/23.0 * 3.74), angular is not yet tuned try 1.0 atm
+    double A_rads = A*2 / wheel_diameter * 1000.0/23.0 * 3.74;
+    double B_rads = B*2 / wheel_diameter * 1000.0/23.0 * 3.74;
     
     // Convert rpm to relative
-    double Left = (A_rads-B_rads) * 1000.0/23.0 * 3.74;
-    double Right = (A_rads+B_rads) * 1000.0/23.0 * 3.74;
+    double Left = (A_rads-B_rads) ;
+    double Right = (A_rads+B_rads) ;
     
     // ROS_INFO("Arpm: %f, Arel: %f, Brpm: %f, Brel: %f", A_rpm, A_rel, B_rpm, Right);
     

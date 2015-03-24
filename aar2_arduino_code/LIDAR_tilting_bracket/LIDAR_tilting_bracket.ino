@@ -43,16 +43,18 @@ void setup()
 
 void loop() 
 {
-  if (a <  25)  //start at 45 degrees from horizontal; 200 steps per rev
+  if (a <  50)  //start at 45 degrees from horizontal; 200 steps per rev
   {
     digitalWrite(dir, HIGH); //downwards
     a++;
     digitalWrite(stp, HIGH);   
     delay(10);               
     digitalWrite(stp, LOW);  
-    delay(10);              
+    delay(10);
+
+    theta = -(45 - 1.8 * a) * 0.01745; //1.8 degrees per step; 2*pi/360    
   }
-  else if(a < 50)
+  else if(a < 100)
   {
     digitalWrite(dir, LOW); //upwards
     a++;
@@ -60,22 +62,22 @@ void loop()
     delay(10);               
     digitalWrite(stp, LOW);  
     delay(10);
+    
+    theta = -(1.8 * (a - 50) - 45) * 0.01745; //1.8 degrees per step; 2*pi/360
   }
   else //restart step count
   {
       a = 1;
   }
-  
-  theta = (45 - 1.8 * a) * 0.01745; //1.8 degrees per step; 2*pi/360
  
   t.header.frame_id = base_link;
   t.child_frame_id = laser;
   
   t.transform.translation.x = 1.0; 
   t.transform.rotation.x = 0.0;
-  t.transform.rotation.y = theta;
+  t.transform.rotation.y = sin(theta/2);
   t.transform.rotation.z = 0.0; 
-  t.transform.rotation.w = 0.0;  
+  t.transform.rotation.w = cos(theta/2);  
   
   t.header.stamp = nh.now();
   broadcaster.sendTransform(t);
