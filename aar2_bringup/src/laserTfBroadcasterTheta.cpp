@@ -6,21 +6,21 @@
 //double theta = -0.78539;
 //int check = 1;
 
-static tf::TransformBroadcaster br;
-tf::Transform transform;
 tf::Quaternion q;
 
 void broadcastTf(const std_msgs::Float32::ConstPtr& msg)
 {
-  q.setRPY(0, msg->data, 0);
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
   transform.setOrigin(tf::Vector3(0.0, 0.0, 0.0) );
+  tf::Quaternion q; 
+  q.setRPY(0, msg->data, 0);
   transform.setRotation(q);
   br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_link", "laser" ));
 }
 
 int main(int argc, char** argv){
-  //ros::init(argc, argv, "laserTfBroadcasterTheta");
-  ros::init();
+  ros::init(argc, argv, "laserTfBroadcasterTheta");
   ros::NodeHandle node;
   ros::Subscriber sub = node.subscribe("pub_theta", 1000, broadcastTf);
 
