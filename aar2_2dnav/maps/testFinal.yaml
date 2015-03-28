@@ -1,0 +1,12 @@
+image: testFinal.pgm
+#path to the image file
+resolution: 0.22
+#meters /pixel for 20m scale (see image), 0.44 for 20m (short) 0.89 for 50m scale googlemaps 1600x900 res
+#origin: [-183.095, -86.68, 0.0]
+origin: [-183.095, -86.68, 0.0]
+#2-D pose of lower left pixel of the map (-832.250, -394.00)pix --> (-183.095, -86.68)m
+occupied_thresh: 0.40 
+#greater = occupied
+free_thresh: 0.1333
+#less = nonoccupied
+negate: 0

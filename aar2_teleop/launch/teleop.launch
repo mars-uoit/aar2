@@ -1,5 +1,5 @@
 <launch>
-  <arg name="joy_dev" default="/dev/input/js2" />
+  <arg name="joy_dev" default="/dev/input/js1" />
   <!--arg name="joy_dev" default="/devices/virtual/input/input22" /-->
   <arg name="joystick" default="true" />
   

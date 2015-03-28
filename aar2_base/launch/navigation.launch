@@ -1,0 +1,142 @@
+<launch>
+<group ns="AAR2_BASE">
+    <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver" output="screen">
+        <rosparam>
+            port: /dev/ttyACM0
+            baud: 115200
+        </rosparam>
+	<rosparam param="channels">[Right,Left]</rosparam>
+    </node>
+    <node pkg="aar2_base" type="aar2_base" name="odom_publisher" output="screen">
+	<remap from="left_feedback" to="Left/feedback"/>
+	<remap from="right_feedback" to="Right/feedback"/>
+    </node>
+</group>
+<node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0.5 0 0 0 /map /odom 50" />
+<!-- Run the map server -->
+  <!-- Need to find the right map server -->
+  <!--node name="map_server" pkg="map_server" type="map_server" args="$(find aar2_2dnav)/maps/my_map.pgm my_map_resolution"/-->
+
+  <!--- Run AMCL -->
+  <!--include file="$(find aar2_2dnav)/launch/amcl.launch" /-->
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find aar2_2dnav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find aar2_2dnav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find aar2_2dnav)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find aar2_2dnav)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find aar2_2dnav)/config/base_local_planner_params.yaml" command="load" />
+    <remap from="odom" to="aar2/odometry/odom" />
+    <remap from="cmd_vel" to="AAR2_BASE/cmd_vel" />
+  </node>
+  <param name="robot_description"
+         command="$(find xacro)/xacro $(find aar2_description)/urdf/aar2.urdf.xacro" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+ <arg name="joy_dev" default="/dev/input/js1" />
+  <!--arg name="joy_dev" default="/devices/virtual/input/input22" /-->
+  <arg name="joystick" default="true" />
+  
+  <rosparam command="load" file="$(find aar2_teleop)/config/teleop.yaml" />
+  
+  <group ns="bluetooth_teleop" if="$(arg joystick)">
+    <node pkg="joy" type="joy_node" name="joy_node">
+      <param name="dev" value="$(arg joy_dev)" />
+    </node>
+
+    <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
+      <remap from="cmd_vel" to="/AAR2_BASE/cmd_vel" />
+    </node>
+  </group>
+
+  <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
+    <remap from="twist_marker_server/cmd_vel" to="/AAR2_BASE/cmd_vel" />
+  </node> 
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find aar2_viz)/rviz/robot.rviz" output="screen"/>
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_odom" clear_params="true">
+      <param name="frequency" value="30"/>  
+      <param name="sensor_timeout" value="0.1"/>  
+      <param name="two_d_mode" value="true"/>
+      <param name="odom_frame" value="odom"/>
+      <param name="base_link_frame" value="base_link"/>
+      <param name="world_frame" value="odom"/>
+      <param name="odom0" value="/AAR2_BASE/odom"/>
+      <param name="imu0" value="/aar_imu/imu/data"/> 
+
+      <rosparam param="odom0_config">[true, true, false, 
+                                      false, false, false, 
+                                      true, true, true, 
+                                      false, false, false]</rosparam>
+
+      <rosparam param="imu0_config">[false, false, false, 
+                                     true,  true,  true, 
+                                     false, false, false, 
+                                     true,  true,  true]</rosparam>
+
+      <param name="odom0_differential" value="false"/>
+      <param name="imu0_differential" value="false"/>
+      <param name="remove_gravitational_acceleration" value="true"/>
+
+      <param name="debug"           value="false"/>
+      <param name="debug_out_file"  value="debug_ekf_localization.txt"/>
+
+      <rosparam param="process_noise_covariance">[0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                                  0.0, 0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                                  0.0, 0.0, 0.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                                  0.0, 0.0, 0.0, 0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.00, 0.06, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.025, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.025, 0.0, 0.0, 0.0, 0.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.0, 0.05, 0.0, 0.0, 0.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.0, 0.0, 0.002, 0.0, 0.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.0, 0.0, 0.0, 0.002, 0.0,
+                                                  0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.004]</rosparam>
+	<remap from ="/odometry/filtered" to="/aar2/odometry/odom" />
+    </node>
+<!-- IMU -->
+	<group ns="aar_imu">
+		<node pkg="rosserial_python" type="serial_node.py" name="ros_arduino_imu" output="screen" respawn="true">
+		<param name="~port" value="/dev/ttyACM1" />
+		<param name="~baud" value="115200" />
+		<remap from="/raw_imu" to="/aar_imu/raw_imu"/>
+		</node>
+		<node pkg="ros_arduino_imu" type="raw_imu_bridge" name="raw_imu_bridge" output="screen" respawn="false" >
+		</node>
+		<node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_madgwick" output="screen" respawn="false">	
+		<param name="publish_tf" value="false"/>
+		</node>
+	</group>
+ 	<!-- GPS -->
+	<group ns="aar_gps">
+		<node pkg="gpsd_client" type="gpsd_client" name="aar_gps" output="screen">
+		<param name="host" value="localhost" />
+		<param name="port" value="2947" />
+		<param name="frame_id" value="base_link" />
+		</node>
+		<!-- ENU translation -->
+		<node pkg="enu" type="from_fix" name="aar_gps_enu">
+		<param name="invalid_covariance_value" value="1000000" />
+		<param name="lock_altitude" value="0"/>
+		<param name="scale_covariance" value="0.05"/>
+		<param name="frame_id" value="base_link" />
+		</node>
+	</group>
+	<!-- LIDAR -->
+	<!-- ARDUINO SENSORS -->
+  <arg name="host" default="192.168.0.3" />
+  <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node" output="screen">
+    <param name="host" value="$(arg host)" />
+  </node>
+  <node pkg="rosserial_python" type="serial_node.py" name="lidar_arduino_serial" output="screen">
+    <param name="~port" value="/dev/ttyACM2" />
+    <param name="~baud" value="57600" />
+  </node>
+  <node pkg="aar2_bringup" name="laserTfBroadcasterTheta" type="laserTfBroadcasterTheta" output="screen"/>
+  <node pkg="aar2_bringup" name="laserToCloud" type="laserToCloud" output="screen"/>
+  <node pkg="aar2_bringup" name="periodic_snapshotter" type="periodic_snapshotter" output="screen"/>
+  <node type="point_cloud_assembler" pkg="laser_assembler" name="my_assembler">
+     <remap from="cloud" to="cloud_in"/>
+     <param name="max_clouds" type="int" value="200" />
+     <param name="fixed_frame" type="string" value="map" />
+  </node>
+</launch>

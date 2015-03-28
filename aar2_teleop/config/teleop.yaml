@@ -2,11 +2,11 @@
 bluetooth_teleop:
   teleop_twist_joy:
     axis_linear: 1
-    scale_linear: 0.18
+    scale_linear: 0.1
     scale_linear_turbo: 0.36
     axis_angular: 2
 # axis_angular : left/right stick left = 0
-    scale_angular: 0.18
+    scale_angular: 0.1
     enable_button: 6
     enable_turbo_button: 4
   joy_node: 

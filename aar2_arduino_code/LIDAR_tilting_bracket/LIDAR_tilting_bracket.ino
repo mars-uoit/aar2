@@ -1,24 +1,21 @@
 #include <AccelStepper.h>
 #include <ArduinoHardware.h>
 #include <ros.h>
-#include <std_msgs/Float32.h>
-//#include <tf/transform_broadcaster.h>
+#include <tf/transform_broadcaster.h>
 //#include <laser_geometry/laser_geometry.h>
 
 int stp = 13;  //connect pin 3 to step input
 int dir = 12;  // connect pin 2 to direction
 int a = 1;     //  gen counter
-double theta = 0;  //laser angle
+double theta;  //laser angle
 
 ros::NodeHandle  nh;
 
-std_msgs::Float32 theta_msg;
-ros::Publisher pub_theta("pub_theta", &theta_msg);
+geometry_msgs::TransformStamped t;
+tf::TransformBroadcaster broadcaster;
 
-//geometry_msgs::TransformStamped t;
-//tf::TransformBroadcaster broadcaster;
-//char base_link[] = "/base_link";
-//char laser[] = "/laser";
+char base_link[] = "/base_link";
+char laser[] = "/laser";
 
 //ros::init(argc, argv, "laserTfBroadcaster");
 //ros::NodeHandle node;
@@ -33,9 +30,7 @@ ros::Publisher pub_theta("pub_theta", &theta_msg);
 void setup() 
 {                
   nh.initNode();
-  nh.advertise(pub_theta);
-  
-//  broadcaster.init(nh);
+  broadcaster.init(nh);
   
 //  node.initNode();
 //  br.init(node);
@@ -74,33 +69,27 @@ void loop()
   {
       a = 1;
   }
-  
-  Serial.println(theta);
-  
-  theta_msg.data = theta;
-  pub_theta.publish( &theta_msg );
-  nh.spinOnce();
  
-//  t.header.frame_id = base_link;
-//  t.child_frame_id = laser;
-//  
-//  t.transform.translation.x = 1.0; 
-//  t.transform.rotation.x = 0.0;
-//  t.transform.rotation.y = sin(theta/2);
-//  t.transform.rotation.z = 0.0; 
-//  t.transform.rotation.w = cos(theta/2);  
-//  
-//  t.header.stamp = nh.now();
-//  broadcaster.sendTransform(t);
-//  nh.spinOnce();
-//  delay(10);
-
-
-
+  t.header.frame_id = base_link;
+  t.child_frame_id = laser;
+  
+  t.transform.translation.x = 1.0; 
+  t.transform.rotation.x = 0.0;
+  t.transform.rotation.y = sin(theta/2);
+  t.transform.rotation.z = 0.0; 
+  t.transform.rotation.w = cos(theta/2);  
+  
+  t.header.stamp = nh.now();
+  broadcaster.sendTransform(t);
+  nh.spinOnce();
+  delay(10);
 
 //  q.setRPY(0, theta, 0);
 //  transform.setRotation(q);
 //  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_link", "laser" ));
 //  ros::spinOnce();
 //  loop_rate.sleep();
+  
+  Serial.println(theta);
+  
 }
