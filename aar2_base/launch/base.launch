@@ -1,15 +1,35 @@
 <launch>
 <group ns="AAR2_BASE">
-    <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver" output="screen">
+    <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver_front" output="screen">
+        <param name="port" value="/dev/serial/by-id/usb-Roboteq_Motor_Controller_8D77234F5055-if00"/>
+	<rosparam param="channels">[RightFront,LeftFront]</rosparam>
+    </node>
+    <node pkg="aar2_base" type="aar2_baseFront" name="odom_publisher_front" output="screen">
+	<remap from="left_feedback" to="LeftFront/feedback"/>
+	<remap from="right_feedback" to="RightFront/feedback"/>
+    </node>
+    <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver_mid" output="screen">
         <rosparam>
-            port: /dev/ttyACM0
+            port: /dev/serial/by-id/usb-Roboteq_Motor_Controller_8D7D24685055-if00
             baud: 115200
         </rosparam>
-	<rosparam param="channels">[Right,Left]</rosparam>
+	<rosparam param="channels">[RightMid,LeftMid]</rosparam>
     </node>
-    <node pkg="aar2_base" type="aar2_base" name="odom_publisher" output="screen">
-	<remap from="left_feedback" to="Left/feedback"/>
-	<remap from="right_feedback" to="Right/feedback"/>
+    <node pkg="aar2_base" type="aar2_baseMid" name="odom_publisher_mid" output="screen">
+	<remap from="left_feedback" to="LeftMid/feedback"/>
+	<remap from="right_feedback" to="RightMid/feedback"/>
+    </node>
+    <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver_back" output="screen">
+        <rosparam>
+            port: /dev/serial/by-id/usb-Roboteq_Motor_Controller_8D87425C5649-if00
+            baud: 115200
+        </rosparam>
+	<rosparam param="channels">[RightBack,LeftBack]</rosparam>
+    </node>
+    <node pkg="aar2_base" type="aar2_baseBack" name="odom_publisher_back" output="screen">
+	<remap from="left_feedback" to="LeftBack/feedback"/>
+	<remap from="right_feedback" to="RightBack/feedback"/>
     </node>
 </group>
 </launch>
+

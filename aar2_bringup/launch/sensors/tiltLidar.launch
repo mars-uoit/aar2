@@ -3,8 +3,11 @@
   <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node" output="screen">
     <param name="host" value="$(arg host)" />
   </node>
+  <!--node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <rosparam file="$(find aar2_bringup)/config/laserscan_filter.yaml" command="load" />
+  </node-->
   <node pkg="rosserial_python" type="serial_node.py" name="serial_node" output="screen">
-    <param name="~port" value="/dev/ttyACM1" />
+    <param name="~port" value="/dev/ttyACM0" />
     <param name="~baud" value="57600" />
   </node>
   <node pkg="aar2_bringup" name="laserTfBroadcasterTheta" type="laserTfBroadcasterTheta" output="screen"/>
@@ -13,7 +16,7 @@
   <node type="point_cloud_assembler" pkg="laser_assembler" name="my_assembler">
      <remap from="cloud" to="cloud_in"/>
      <param name="max_clouds" type="int" value="200" />
-     <param name="fixed_frame" type="string" value="map" />
+     <param name="fixed_frame" type="string" value="odom" />
   </node>
 </launch>
 

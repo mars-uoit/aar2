@@ -242,8 +242,8 @@ int main(int argc, char **argv) {
     odom_pub = n.advertise<nav_msgs::Odometry>("odom", 5);
     
     // Motor CMD Publisher hard coded for now
-    velocityL = n.advertise<roboteq_msgs::Command>("LeftBack/cmd", 5);
-    velocityR = n.advertise<roboteq_msgs::Command>("RightBack/cmd", 5);
+    velocityL = n.advertise<roboteq_msgs::Command>("LeftFront/cmd", 5);
+    velocityR = n.advertise<roboteq_msgs::Command>("RightFront/cmd", 5);
     
     // TF Broadcaster
     //odom_broadcaster = new tf::TransformBroadcaster;
@@ -251,8 +251,8 @@ int main(int argc, char **argv) {
     // cmd_vel Subscriber
     ros::Subscriber sub = n.subscribe("cmd_vel", 1, cmd_velCallback);
 
-    message_filters::Subscriber<roboteq_msgs::Feedback> left_sub(n, "LeftBack/feedback", 1);
-    message_filters::Subscriber<roboteq_msgs::Feedback> right_sub(n, "RightBack/feedback", 1);
+    message_filters::Subscriber<roboteq_msgs::Feedback> left_sub(n, "LeftFront/feedback", 1);
+    message_filters::Subscriber<roboteq_msgs::Feedback> right_sub(n, "RightFront/feedback", 1);
     //message_filters::TimeSynchronizer<roboteq_msgs::Feedback, roboteq_msgs::Feedback> sync(left_sub, right_sub, 10);
     message_filters::Synchronizer<SyncPolicy> sync (SyncPolicy(5), left_sub, right_sub);
     sync.registerCallback(boost::bind(&queryEncoders, _1, _2));

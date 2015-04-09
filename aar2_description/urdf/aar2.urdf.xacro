@@ -22,6 +22,7 @@
   <material name="light_grey"><color rgba="0.4 0.4 0.4 1.0" /></material>
   <material name="yellow"><color rgba="0.8 0.8 0.0 1.0" /></material>
   <material name="black"><color rgba="0.15 0.15 0.15 1.0" /></material>
+  <material name="white"><color rgba="255 255 255 1.0" /></material>
 
   <xacro:macro name="wheel" params="prefix *joint_pose">
 
@@ -31,7 +32,7 @@
         <geometry>
 		<cylinder length="${wheel_width}" radius="${wheel_radius}"/>
         </geometry>
-        <material name="black" />
+        <material name="white" />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
@@ -95,7 +96,7 @@
       <geometry>
         <box size ="${chassis_length} ${chassis_width} ${chassis_height}"/>
       </geometry>
-      <material name="dark_grey" />
+      <material name="yellow" />
     </visual>
     <collision>
       <origin xyz="0 0 ${chassis_height/2}"/>

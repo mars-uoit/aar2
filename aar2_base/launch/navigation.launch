@@ -1,4 +1,6 @@
 <launch>
+
+<!--Kinematic Controller-->
 <group ns="AAR2_BASE">
     <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver" output="screen">
         <rosparam>
@@ -12,14 +14,9 @@
 	<remap from="right_feedback" to="Right/feedback"/>
     </node>
 </group>
-<node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0.5 0 0 0 /map /odom 50" />
-<!-- Run the map server -->
-  <!-- Need to find the right map server -->
-  <!--node name="map_server" pkg="map_server" type="map_server" args="$(find aar2_2dnav)/maps/my_map.pgm my_map_resolution"/-->
 
-  <!--- Run AMCL -->
-  <!--include file="$(find aar2_2dnav)/launch/amcl.launch" /-->
-
+<!--Navigation-->
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0.5 0 0 0 /map /odom 50" />
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find aar2_2dnav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find aar2_2dnav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
@@ -29,13 +26,15 @@
     <remap from="odom" to="aar2/odometry/odom" />
     <remap from="cmd_vel" to="AAR2_BASE/cmd_vel" />
   </node>
+
+<!--Tf-->
   <param name="robot_description"
          command="$(find xacro)/xacro $(find aar2_description)/urdf/aar2.urdf.xacro" />
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
- <arg name="joy_dev" default="/dev/input/js1" />
-  <!--arg name="joy_dev" default="/devices/virtual/input/input22" /-->
-  <arg name="joystick" default="true" />
-  
+
+<!--Teleop-->
+  <arg name="joy_dev" default="/dev/input/js1" />
+  <arg name="joystick" default="true" />  
   <rosparam command="load" file="$(find aar2_teleop)/config/teleop.yaml" />
   
   <group ns="bluetooth_teleop" if="$(arg joystick)">
@@ -51,7 +50,11 @@
   <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
     <remap from="twist_marker_server/cmd_vel" to="/AAR2_BASE/cmd_vel" />
   </node> 
+
+<!--Rviz-->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find aar2_viz)/rviz/robot.rviz" output="screen"/>
+
+<!--Localization (odom for now)-->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_odom" clear_params="true">
       <param name="frequency" value="30"/>  
       <param name="sensor_timeout" value="0.1"/>  
@@ -60,10 +63,10 @@
       <param name="base_link_frame" value="base_link"/>
       <param name="world_frame" value="odom"/>
       <param name="odom0" value="/AAR2_BASE/odom"/>
-      <param name="imu0" value="/aar_imu/imu/data"/> 
+      <!--param name="imu0" value="/aar_imu/imu/data"/--> 
 
       <rosparam param="odom0_config">[true, true, false, 
-                                      false, false, false, 
+                                      false, false, true, 
                                       true, true, true, 
                                       false, false, false]</rosparam>
 
@@ -93,6 +96,7 @@
                                                   0.0, 0.0, 0.0, 0.0, 0.00, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.004]</rosparam>
 	<remap from ="/odometry/filtered" to="/aar2/odometry/odom" />
     </node>
+
 <!-- IMU -->
 	<group ns="aar_imu">
 		<node pkg="rosserial_python" type="serial_node.py" name="ros_arduino_imu" output="screen" respawn="true">
@@ -106,23 +110,22 @@
 		<param name="publish_tf" value="false"/>
 		</node>
 	</group>
- 	<!-- GPS -->
+ 	<!-- GPS (no gps as well for now) >
 	<group ns="aar_gps">
 		<node pkg="gpsd_client" type="gpsd_client" name="aar_gps" output="screen">
 		<param name="host" value="localhost" />
 		<param name="port" value="2947" />
 		<param name="frame_id" value="base_link" />
 		</node>
-		<!-- ENU translation -->
 		<node pkg="enu" type="from_fix" name="aar_gps_enu">
 		<param name="invalid_covariance_value" value="1000000" />
 		<param name="lock_altitude" value="0"/>
 		<param name="scale_covariance" value="0.05"/>
 		<param name="frame_id" value="base_link" />
 		</node>
-	</group>
-	<!-- LIDAR -->
-	<!-- ARDUINO SENSORS -->
+	</group -->
+
+  <!-- LIDAR -->
   <arg name="host" default="192.168.0.3" />
   <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node" output="screen">
     <param name="host" value="$(arg host)" />

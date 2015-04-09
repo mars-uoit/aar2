@@ -12,7 +12,7 @@ void broadcastTf(const std_msgs::Float32::ConstPtr& msg)
 {
   static tf::TransformBroadcaster br;
   tf::Transform transform;
-  transform.setOrigin(tf::Vector3(0.0, 0.0, 0.0) );
+  transform.setOrigin(tf::Vector3(1.5, 0.0, 0.5) );
   tf::Quaternion q; 
   q.setRPY(0, msg->data, 0);
   transform.setRotation(q);

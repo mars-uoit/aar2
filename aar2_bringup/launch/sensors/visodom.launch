@@ -1,0 +1,20 @@
+<launch>
+	<arg name="camera" default="camera" /> <!-- The namespace where images are published -->
+
+	<param name="/use_sim_time" value="false"/>
+	<group ns="$(arg camera)" >
+		<node pkg="image_proc" type="image_proc" name="image_proc">
+	    	<!--rosparam file="$(arg disparity_params)"/-->
+		</node>
+	</group>
+	<node pkg="tf" type="static_transform_publisher" name="base_link_to_camera" args="0 0 0 -1.5707 0 -1.5707 /base_link /head_camera 50" />
+	<!-- Run the viso2_ros package -->
+	<group ns="$(arg camera)" >
+		<node pkg="viso2_ros" type="mono_odometer" name="mono_odometer" output="screen">
+			<remap from="image" to="image_rect"/>
+			<param name="camera_height" value="0.8"/>
+			<param name="camera_pitch" value="0.0"/>
+			<param name="publish_tf" value="false"/>
+		</node>
+	</group>
+</launch>

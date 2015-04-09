@@ -41,14 +41,14 @@ setconfig(_MDEC, 2, 10000)
 
 ' Closed-loop control (p216-218)
 ' Change both MMOD into 1 when encoders mounted
-setconfig(_MMOD, 1, 1)
+setconfig(_MMOD, 1, 0)
 setconfig(_KP, 1, 0)
 setconfig(_KI, 1, 100)
 setconfig(_KD, 1, 0)
 setconfig(_ICAP, 1, 100)
 setconfig(_CLERD, 1, 0)
 
-setconfig(_MMOD, 2, 1)
+setconfig(_MMOD, 2, 0)
 setconfig(_KP, 2, 0)
 setconfig(_KI, 2, 100)
 setconfig(_KD, 2, 0)
