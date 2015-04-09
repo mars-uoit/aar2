@@ -1,0 +1,24 @@
+<launch>
+  <!-- Launch usb_cam node -->
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video1" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="usb_cam" />
+    <param name="io_method" value="mmap"/>
+  </node>
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
+  <arg name="camera" default="/camera_info"/> <!-- camera must be set at launch -->
+  <node name="image_proc" pkg="image_proc" type="image_proc" ns="$(arg camera)"/>
+  <node name="mono_odometer" pkg="viso2_ros" type="mono_odometer" output="screen">
+    <remap from="image" to="$(arg camera)/image_rect" />
+    <param name="camera_height" value="0.8" /> <!-- cam is 0.5m above ground -->
+    <param name="camera_pitch" value="0.0" /> <!-- cam is looking straight forward -->
+  </node>
+
+</launch>
