@@ -1,0 +1,5 @@
+<launch>
+	<include file="$(find aar2_bringup)/launch/localization/ekf_template_abs.launch" />
+	<include file="$(find aar2_bringup)/launch/localization/ekf_template_odom.launch" />
+	<include file="$(find aar2_bringup)/launch/localization/navsat_transform.launch" />
+</launch>

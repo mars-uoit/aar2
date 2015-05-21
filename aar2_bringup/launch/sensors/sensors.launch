@@ -2,11 +2,11 @@
 	<!-- IMU -->
 	<group ns="aar_imu">
 		<node pkg="rosserial_python" type="serial_node.py" name="ros_arduino_imu" output="screen" respawn="true">
-		<param name="~port" value="/dev/ttyACM2" />
+		<param name="~port" value="/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Mega_2560_85235333135351C08021-if00" />
 		<param name="~baud" value="115200" />
 		<remap from="/raw_imu" to="/aar_imu/raw_imu"/>
 		</node>
-		<node pkg="ros_arduino_imu" type="raw_imu_bridge" name="raw_imu_bridge" output="screen" respawn="false" >
+		<node pkg="ros_arduino_imu" type="raw_imu_bridge_node" name="raw_imu_bridge" output="screen" respawn="false" >
 		</node>
 		<node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_madgwick" output="screen" respawn="false">	
 		<param name="publish_tf" value="false"/>
@@ -19,13 +19,7 @@
 		<param name="port" value="2947" />
 		<param name="frame_id" value="base_link" />
 		</node>
-		<!-- ENU translation -->
-		<node pkg="enu" type="from_fix" name="aar_gps_enu">
-		<param name="invalid_covariance_value" value="1000000" />
-		<param name="lock_altitude" value="0"/>
-		<param name="scale_covariance" value="0.05"/>
-		<param name="frame_id" value="base_link" />
-		</node>
+
 	</group>
 	<!-- LIDAR -->
 	<!-- ARDUINO SENSORS -->
