@@ -7,7 +7,7 @@
     <rosparam file="$(find aar2_bringup)/config/laserscan_filter.yaml" command="load" />
   </node-->
   <node pkg="rosserial_python" type="serial_node.py" name="serial_node" output="screen">
-    <param name="~port" value="/dev/ttyACM0" />
+    <param name="~port" value="/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_75439323835351401081-if00" />
     <param name="~baud" value="57600" />
   </node>
   <node pkg="aar2_bringup" name="laserTfBroadcasterTheta" type="laserTfBroadcasterTheta" output="screen"/>
