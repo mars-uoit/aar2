@@ -1,4 +1,4 @@
-# Teleop configuration for PS4 Navigation joystick.
+# Teleop configuration for PS3 Navigation joystick.
 bluetooth_teleop:
   teleop_twist_joy:
     axis_linear: 1
@@ -7,8 +7,8 @@ bluetooth_teleop:
     axis_angular: 2
 # axis_angular : left/right stick left = 0
     scale_angular: 0.3
-    enable_button: 6
-    enable_turbo_button: 4
+    enable_button: 10
+    enable_turbo_button: 8
   joy_node: 
     deadzone: 0.1
     autorepeat_rate: 20
