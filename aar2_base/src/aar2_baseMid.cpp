@@ -201,7 +201,7 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     geometry_msgs::TransformStamped odom_trans;
     odom_trans.header.stamp = now;
     odom_trans.header.frame_id = "odom";
-    odom_trans.child_frame_id = "base_footprint";
+    odom_trans.child_frame_id = "base_link";
     
     odom_trans.transform.translation.x = prev_x;
     odom_trans.transform.translation.y = prev_y;

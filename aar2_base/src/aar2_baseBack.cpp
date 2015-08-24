@@ -21,7 +21,7 @@ using namespace message_filters::sync_policies;
 typedef message_filters::sync_policies::ApproximateTime<roboteq_msgs::Feedback,
 					       roboteq_msgs::Feedback> SyncPolicy;
 
-ros::Publisher odom_pub;
+//ros::Publisher odom_pub;
 ros::Publisher velocityL;
 ros::Publisher velocityR;
 //tf::TransformBroadcaster *odom_broadcaster;
@@ -142,11 +142,13 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     prevEnc1=encoder1;
     if (abs(left_v)>100000) {ROS_INFO("Left Encoder Wrap Around"); return;} // Position is reported in rads, and wraps around +-6M 
     left_v /= delta_time;
+	 left_v /= 82; //82:1 gear ratio
 
     double right_v = encoder2 -prevEnc2;
     prevEnc2=encoder2;
     if (abs(right_v)>100000) {ROS_INFO("Right Encoder Wrap Around"); return;}
     right_v /= delta_time;
+	 right_v /= 82; //82:1 gear ratio
     
     
 
@@ -175,7 +177,7 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     geometry_msgs::Quaternion quat = tf::createQuaternionMsgFromYaw(prev_w);
     
     // Populate the msg
-    nav_msgs::Odometry odom_msg;
+    /*nav_msgs::Odometry odom_msg;
     odom_msg.header.stamp = now;
     odom_msg.header.frame_id = odom_frame_id;
     odom_msg.pose.pose.position.x = prev_x/2.0;
@@ -195,18 +197,18 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     //{ROS_WARN("Publish odom"); return;}
     odom_pub.publish(odom_msg);
     //{ROS_WARN("Odom published"); return;}
-    // TODO: Add TF broadcaster
-    // geometry_msgs::TransformStamped odom_trans;
-    // odom_trans.header.stamp = now;
-    // odom_trans.header.frame_id = "odom";
-    // odom_trans.child_frame_id = "base_footprint";
-    //
-    // odom_trans.transform.translation.x = prev_x;
-    // odom_trans.transform.translation.y = prev_y;
-    // odom_trans.transform.translation.z = 0.0;
-    // odom_trans.transform.rotation = quat;
-    //
-    // odom_broadcaster->sendTransform(odom_trans);
+    // TODO: Add TF broadcaster**
+    geometry_msgs::TransformStamped odom_trans;
+    odom_trans.header.stamp = now;
+    odom_trans.header.frame_id = "odom";
+    odom_trans.child_frame_id = "base_footprint";
+    
+    odom_trans.transform.translation.x = prev_x;
+    odom_trans.transform.translation.y = prev_y;
+    odom_trans.transform.translation.z = 0.0;
+    odom_trans.transform.rotation = quat;
+    
+    odom_broadcaster->sendTransform(odom_trans);*/
 }
 
 int main(int argc, char **argv) {
@@ -239,13 +241,13 @@ int main(int argc, char **argv) {
     //ros::Rate encoder_rate(encoder_poll_rate);
     
     // Odometry Publisher
-    odom_pub = n.advertise<nav_msgs::Odometry>("odom", 5);
+    //odom_pub = n.advertise<nav_msgs::Odometry>("odom", 5);
     
     // Motor CMD Publisher hard coded for now
-    velocityL = n.advertise<roboteq_msgs::Command>("LeftBack/cmd", 5);
-    velocityR = n.advertise<roboteq_msgs::Command>("RightBack/cmd", 5);
+    velocityL = n.advertise<roboteq_msgs::Command>("LeftBack/cmd", 10);
+    velocityR = n.advertise<roboteq_msgs::Command>("RightBack/cmd", 10);
     
-    // TF Broadcaster
+    // TF Broadcaster**
     //odom_broadcaster = new tf::TransformBroadcaster;
     
     // cmd_vel Subscriber

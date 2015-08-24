@@ -21,7 +21,7 @@ using namespace message_filters::sync_policies;
 typedef message_filters::sync_policies::ApproximateTime<roboteq_msgs::Feedback,
 					       roboteq_msgs::Feedback> SyncPolicy;
 
-ros::Publisher odom_pub;
+//ros::Publisher odom_pub;
 ros::Publisher velocityL;
 ros::Publisher velocityR;
 //tf::TransformBroadcaster *odom_broadcaster;
@@ -175,7 +175,7 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     geometry_msgs::Quaternion quat = tf::createQuaternionMsgFromYaw(prev_w);
     
     // Populate the msg
-    nav_msgs::Odometry odom_msg;
+    /*nav_msgs::Odometry odom_msg;
     odom_msg.header.stamp = now;
     odom_msg.header.frame_id = odom_frame_id;
     odom_msg.pose.pose.position.x = prev_x/2.0;
@@ -196,17 +196,17 @@ void queryEncoders(const roboteq_msgs::Feedback::ConstPtr& left_msg, const robot
     odom_pub.publish(odom_msg);
     //{ROS_WARN("Odom published"); return;}
     // TODO: Add TF broadcaster
-    // geometry_msgs::TransformStamped odom_trans;
-    // odom_trans.header.stamp = now;
-    // odom_trans.header.frame_id = "odom";
-    // odom_trans.child_frame_id = "base_footprint";
-    //
-    // odom_trans.transform.translation.x = prev_x;
-    // odom_trans.transform.translation.y = prev_y;
-    // odom_trans.transform.translation.z = 0.0;
-    // odom_trans.transform.rotation = quat;
-    //
-    // odom_broadcaster->sendTransform(odom_trans);
+    geometry_msgs::TransformStamped odom_trans;
+    odom_trans.header.stamp = now;
+    odom_trans.header.frame_id = "odom";
+    odom_trans.child_frame_id = "base_footprint";
+    
+    odom_trans.transform.translation.x = prev_x;
+    odom_trans.transform.translation.y = prev_y;
+    odom_trans.transform.translation.z = 0.0;
+    odom_trans.transform.rotation = quat;
+    
+    odom_broadcaster->sendTransform(odom_trans);*/
 }
 
 int main(int argc, char **argv) {
@@ -239,7 +239,7 @@ int main(int argc, char **argv) {
     //ros::Rate encoder_rate(encoder_poll_rate);
     
     // Odometry Publisher
-    odom_pub = n.advertise<nav_msgs::Odometry>("odom", 5);
+    //odom_pub = n.advertise<nav_msgs::Odometry>("odom", 5);
     
     // Motor CMD Publisher hard coded for now
     velocityL = n.advertise<roboteq_msgs::Command>("LeftFront/cmd", 5);
