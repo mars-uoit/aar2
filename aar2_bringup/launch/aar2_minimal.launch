@@ -1,0 +1,23 @@
+<launch>
+	<!-- Launch Base -->	
+	<include file="$(find aar2_base)/launch/base.launch" />	
+
+	<!-- Launch Sensors -->
+	<include file="$(find aar2_bringup)/launch/sensors/imu.launch" />
+
+	<!-- Launch robot localization -->
+	<include file="$(find aar2_bringup)/launch/localization/ekf_template_abs.launch" />
+	<include file="$(find aar2_bringup)/launch/localization/ekf_template_odom.launch" />
+	<include file="$(find aar2_bringup)/launch/localization/navsat_transform.launch" />
+
+	<!-- Launch Description (Transforms) -->
+	<include file="$(find aar2_description)/launch/aar2descriptionX.launch" />
+
+	<!-- Launch Map -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find aar2_2dnav)/maps/testFinal.yaml"/>
+
+	<!-- Launch Move_Base -->
+	<include file="$(find aar2_2dnav)/launch/move_base.launch" />
+
+
+</launch>

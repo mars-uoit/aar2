@@ -12,25 +12,4 @@
 		<param name="publish_tf" value="false"/>
 		</node>
 	</group>
-
- 	<!-- GPS -->
-	<node pkg="aar2_bringup" type="gps.sh" name="aar2_bringup">
-	</node>
-	<group ns="aar_gps">
-		<node pkg="gpsd_client" type="gpsd_client" name="aar_gps" output="screen">
-		<param name="host" value="localhost" />
-		<param name="port" value="2947" />
-		<param name="frame_id" value="base_link" />
-		</node>
-	</group>
-
-	<!-- LIDAR -->
-
-	<!-- Kinect -->
-	<include file="$(find freenect_launch)/launch/examples/freenect-xyz.launch" />
-	<node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" > 
-   	<remap from="image" to="/camera/depth/image"/>
-	</node>
-
-	<!-- ARDUINO SENSORS -->
 </launch>
