@@ -106,12 +106,18 @@ include_directories(
 # add_executable(aar2_bringup_node src/aar2_bringup_node.cpp)
 add_executable(laserToCloud src/laserToCloud.cpp)
 target_link_libraries(laserToCloud ${catkin_LIBRARIES})
+add_executable(laserToCloud_filtered src/laserToCloud_filtered.cpp)
+target_link_libraries(laserToCloud_filtered ${catkin_LIBRARIES})
 add_executable(laserTfBroadcaster src/laserTfBroadcaster.cpp)
 target_link_libraries(laserTfBroadcaster ${catkin_LIBRARIES})
 add_executable(periodic_snapshotter src/periodic_snapshotter.cpp)
 target_link_libraries(periodic_snapshotter ${catkin_LIBRARIES})
 add_executable(laserTfBroadcasterTheta src/laserTfBroadcasterTheta.cpp)
 target_link_libraries(laserTfBroadcasterTheta ${catkin_LIBRARIES})
+add_executable(base_laserTfBroadcaster_AAR2 src/base_laserTfBroadcaster_AAR2.cpp)
+target_link_libraries(base_laserTfBroadcaster_AAR2 ${catkin_LIBRARIES})
+add_executable(lidar_TfBroadcaster src/lidar_TfBroadcaster.cpp)
+target_link_libraries(lidar_TfBroadcaster ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
