@@ -56,6 +56,12 @@
      <!--param name="sensor/_model/[hit|miss]" value="0.5 / 0.5" /-->
   </node>
 
+  <!-- Pointcloud2 to Pointcloud -->
+  <node pkg="point_cloud_converter" name="point_cloud_converter_2" type="point_cloud_converter_node" >
+     <remap from="points2_in" to="octomap_point_cloud_centers"/>
+     <remap from="points_out" to="point_cloud_octomap" />
+  </node>
+
   <!-- Pointcloud to Laser Scan -->
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_node">
      <remap from="cloud_in" to="assembled_cloud_2" />
