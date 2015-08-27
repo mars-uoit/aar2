@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roboteq_msgs
   roscpp
   std_msgs
+  tf
 )
 
 
