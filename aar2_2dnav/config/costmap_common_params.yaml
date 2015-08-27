@@ -4,10 +4,10 @@ raytrace_range: 3.5
 #robot_radius: ir_of_robot
 inflation_radius: 0.2
 
-observation_sources: assembled_cloud
+observation_sources: point_cloud_octomap #scanMap
 
-#laser_scan_sensor: {sensor_frame: frame_name, data_type: LaserScan, topic: topic_name, #marking: true, clearing: true}
+#scanMap: {sensor_frame: laser, data_type: LaserScan, topic: scanMap, marking: true, clearing: true}
 #add frame, topic for lidar scan
 
-assembled_cloud: {sensor_frame: map, data_type: PointCloud, topic: assembled_cloud, marking: true, clearing: true}
+point_cloud_octomap : {sensor_frame: laser, data_type: PointCloud, topic: point_cloud_octomap, marking: true, clearing: true}
 #add frame, topic for point cloud scan from tilting lidar
