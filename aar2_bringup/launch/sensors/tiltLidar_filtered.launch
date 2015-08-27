@@ -1,0 +1,23 @@
+<launch>
+  <arg name="host" default="192.168.0.3" />
+  <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node" output="screen">
+    <param name="host" value="$(arg host)" />
+  </node>
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <rosparam file="$(find aar2_bringup)/config/laserscan_filter.yaml" command="load" />
+  </node>
+  <node pkg="rosserial_python" type="serial_node.py" name="serial_node" output="screen">
+    <param name="~port" value="/dev/serial/by-id/usb-Arduino__www.arduino.cc__0042_5533033393035140E020-if00" />
+    <param name="~baud" value="57600" />
+  </node>
+  <node pkg="aar2_bringup" name="laserTfBroadcasterTheta" type="laserTfBroadcasterTheta" output="screen"/>
+  <node pkg="aar2_bringup" name="laserToCloud_filtered" type="laserToCloud_filtered" output="screen"/>
+  <node type="point_cloud_assembler" pkg="laser_assembler" name="my_assembler">
+     <remap from="cloud" to="cloud_in"/>
+     <param name="max_clouds" type="int" value="200" />
+     <!--param name="fixed_frame" type="string" value="odom" /-->
+     <param name ="fixed_frame" type="string" value="base_link"/>
+  </node>
+  <node pkg="aar2_bringup" name="periodic_snapshotter" type="periodic_snapshotter" output="screen"/>
+</launch>
+
