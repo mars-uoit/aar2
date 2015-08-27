@@ -2,9 +2,16 @@
   
   <arg name="host" default="192.168.0.3" />
   
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_odom" args="0 0 0 0 0 0 /odom /base_link 50" /> 
+
   <!-- Connect to the Lidar -->
   <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node" output="screen">
     <param name="host" value="$(arg host)" />
+  </node>
+
+  <!-- Limit the scan angle -->
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <rosparam file="$(find aar2_bringup)/config/laserscan_filter.yaml" command="load" />
   </node>
 
   <!-- Connect to the Arduino -->
